@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 from textwrap import dedent
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from fastmcp import FastMCP
 from typing import Annotated
@@ -700,6 +701,11 @@ class XHS:
             allow_origins=["*"],  # 或具体域名列表
             allow_methods=["*"],
             allow_headers=["*"],
+        )
+        api.mount(
+            "/download",
+            StaticFiles(directory=self.manager.folder),
+            name="download",
         )
         
         self.setup_routes(api)
