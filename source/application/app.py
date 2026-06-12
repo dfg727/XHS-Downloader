@@ -120,7 +120,7 @@ class XHS:
         mapping_data: dict = None,
         work_path="",
         folder_name="Download",
-        name_format="发布时间 作者昵称 作品标题",
+        name_format="作者ID 作品ID",
         user_agent: str = None,
         cookie: str = "",
         proxy: str | dict = None,
