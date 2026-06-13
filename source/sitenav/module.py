@@ -62,8 +62,11 @@ class SiteItem(BaseModule):
         if "id" in kwargs:
             del kwargs["id"]
 
-        columns = ", ".join(i[0] for i in self.DATA_TABLE if i[0] != "id")
-        placeholders = ", ".join("?" for _ in kwargs)
+        # 仅插入 DATA_TABLE 中定义的且传入的字段
+        valid_keys = [i[0] for i in self.DATA_TABLE if i[0] != "id" and i[0] in kwargs]
+        columns = ", ".join(valid_keys)
+        placeholders = ", ".join("?" for _ in valid_keys)
+        values = tuple(kwargs[k] for k in valid_keys)
 
         await self.database.execute(
             f"""INSERT INTO site_item (
@@ -71,7 +74,7 @@ class SiteItem(BaseModule):
         ) VALUES (
         {placeholders}
         );""",
-            self.__generate_values(kwargs),
+            values,
         )
         await self.database.commit()
 
@@ -81,7 +84,22 @@ class SiteItem(BaseModule):
 
     async def delete(self, id_: str) -> None:
         if id_:
-            await self.database.execute("DELETE FROM site_item WHERE ID=?", (id_,))
+            # 迭代获取所有需要删除的子孙节点 ID
+            to_delete = [id_]
+            index = 0
+            while index < len(to_delete):
+                current_id = to_delete[index]
+                await self.cursor.execute("SELECT id FROM site_item WHERE pId = ?", (current_id,))
+                rows = await self.cursor.fetchall()
+                for row in rows:
+                    to_delete.append(row[0])
+                index += 1
+
+            placeholders = ", ".join("?" for _ in to_delete)
+            await self.database.execute(
+                f"DELETE FROM site_item WHERE id IN ({placeholders})",
+                tuple(to_delete),
+            )
             await self.database.commit()
 
     async def deletes(self, ids: list | tuple):

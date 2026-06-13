@@ -120,13 +120,18 @@ class DataRecorder(IDRecorder):
 
     async def add(self, **kwargs) -> None:
         if self.switch:
+            valid_keys = [i[0] for i in self.DATA_TABLE if i[0] in kwargs]
+            columns = ", ".join(valid_keys)
+            placeholders = ", ".join("?" for _ in valid_keys)
+            values = tuple(kwargs[k] for k in valid_keys)
+
             await self.database.execute(
                 f"""REPLACE INTO explore_data (
-        {", ".join(i[0] for i in self.DATA_TABLE)}
+        {columns}
         ) VALUES (
-        {", ".join("?" for _ in kwargs)}
+        {placeholders}
         );""",
-                self.__generate_values(kwargs),
+                values,
             )
             await self.database.commit()
 

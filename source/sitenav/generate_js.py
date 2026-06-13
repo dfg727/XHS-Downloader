@@ -4,21 +4,22 @@ from typing import Any, Dict, List
 
 def build_tree(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """构建树形结构"""
-    # 创建id到item的映射
-    item_map = {item["id"]: item for item in items}
+    # 创建id到item的映射，避免直接修改原项
+    item_map = {item["id"]: {**item, "children": []} for item in items}
 
     # 构建树
     tree = []
     for item in items:
-        if item["pId"] == 0:
-            tree.append(item)
-            item["children"] = []
+        item_id = item["id"]
+        pid = item.get("pId")
+
+        # 如果没有父节点或父节点不存在，则为根节点
+        if not pid or pid not in item_map:
+            tree.append(item_map[item_id])
         else:
-            parent = item_map.get(item["pId"])
+            parent = item_map.get(pid)
             if parent:
-                if "children" not in parent:
-                    parent["children"] = []
-                parent["children"].append(item)
+                parent["children"].append(item_map[item_id])
 
     return tree
 
