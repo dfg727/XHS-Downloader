@@ -79,15 +79,19 @@ class SiteNavRoute:
             else:
                 # If no id and has uri but no desc, fetch metadata from url
                 if site_item.uri and not site_item.desc:
-                    from .site_metadata import fetch_metadata_from_url
-                    metadata = await fetch_metadata_from_url(site_item.uri)
-                    # Update site_item with fetched metadata
-                    if metadata.get("title"):
-                        site_item.name = metadata["title"]
-                    if metadata.get("description"):
-                        site_item.desc = metadata["description"]
-                    if metadata.get("favicon"):
-                        site_item.favicon = metadata["favicon"]
+                    try:
+                        from .site_metadata import fetch_metadata_from_url
+                        metadata = await fetch_metadata_from_url(site_item.uri)
+                        # Update site_item with fetched metadata if no error occurred
+                        if isinstance(metadata, dict) and "error" not in metadata:
+                            if metadata.get("title"):
+                                site_item.name = metadata["title"]
+                            if metadata.get("description"):
+                                site_item.desc = metadata["description"]
+                            if metadata.get("favicon"):
+                                site_item.favicon = metadata["favicon"]
+                    except Exception as e:
+                        logging(self.manager.print, f"Error fetching metadata for {site_item.uri}: {e}")
                 await self.db_obj.add(**site_item.model_dump())
 
             return {"code": 200, "message": "Site item saved successfully"}
