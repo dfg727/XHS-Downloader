@@ -106,7 +106,10 @@ class SiteItem(BaseModule):
         [await self.delete(i) for i in ids]
 
     async def all(self, category: str):
-        await self.cursor.execute("SELECT * FROM site_item WHERE LOWER(category) = LOWER(?)", (category,))
+        await self.cursor.execute(
+            "SELECT * FROM site_item WHERE LOWER(category) = LOWER(?) ORDER BY orderNum ASC",
+            (category,),
+        )
         rows = await self.cursor.fetchall()
 
         # 将元组转换为字典
