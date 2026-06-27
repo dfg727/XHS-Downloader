@@ -17,6 +17,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from source.sitenav import SiteItem, SiteNavRoute
+from source.sudo import SudokuItem, SudokuRoute
 from fastapi.responses import RedirectResponse
 from fastmcp import FastMCP
 from typing import Annotated
@@ -187,6 +188,7 @@ class XHS:
         self.id_recorder = IDRecorder(self.manager)
         self.data_recorder = DataRecorder(self.manager)
         self.data_sites = SiteItem(self.manager.root)
+        self.data_sudoku = SudokuItem(self.manager.root)
         self.clipboard_cache: str = ""
         self.queue = Queue()
         self.event = Event()
@@ -662,6 +664,7 @@ class XHS:
         await self.data_recorder.__aenter__()
         await self.map_recorder.__aenter__()
         await self.data_sites.__aenter__()
+        await self.data_sudoku.__aenter__()
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback):
@@ -669,6 +672,7 @@ class XHS:
         await self.data_recorder.__aexit__(exc_type, exc_value, traceback)
         await self.map_recorder.__aexit__(exc_type, exc_value, traceback)
         await self.data_sites.__aexit__(exc_type, exc_value, traceback)
+        await self.data_sudoku.__aexit__(exc_type, exc_value, traceback)
         await self.close()
 
     async def close(self):
@@ -713,6 +717,8 @@ class XHS:
         )
         site_nav_router = SiteNavRoute(self.manager, self.data_sites).setup_routes()
         api.include_router(site_nav_router)
+        sudoku_router = SudokuRoute(self.manager, self.data_sudoku).setup_routes()
+        api.include_router(sudoku_router)
         
         self.setup_routes(api)
         config = Config(

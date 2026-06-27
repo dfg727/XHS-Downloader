@@ -34,6 +34,9 @@ class Settings:
         "write_mtime": False,  # 是否写入修改时间
         "language": "zh_CN",  # 语言设置
         "script_server": False,  # 是否启用脚本服务器
+        "openai_api_key": "",  # OpenAI/第三方 API 密钥
+        "openai_base_url": "https://api.openai.com/v1",  # OpenAI/第三方 API 基础 URL
+        "openai_model": "gpt-4o-mini",  # 识别使用的多模态模型名称
     }
     # 根据操作系统设置编码格式
     encode = "UTF-8-SIG" if system() == "Windows" else "UTF-8"

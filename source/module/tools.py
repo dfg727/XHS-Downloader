@@ -40,15 +40,18 @@ def retry_limited(function):
 
 
 def logging(log: Callable, text, style=INFO):
-    string = Text(text, style=style)
-    func = log()
-    if func is print:
-        func(string)
-    else:
-        func.write(
-            string,
-            scroll_end=True,
-        )
+    try:
+        string = Text(text, style=style)
+        func = log()
+        if func is print:
+            func(string)
+        else:
+            func.write(
+                string,
+                scroll_end=True,
+            )
+    except Exception:
+        pass
 
 
 def get_wait_time(
