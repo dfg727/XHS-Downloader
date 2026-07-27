@@ -111,7 +111,7 @@ class XHS:
     USER_RN = compile(r"(?:https?://)?www\.rednote\.com/user/profile/[a-z0-9]+/\S+")
     SHARE_XHS = compile(r"(?:https?://)?www\.xiaohongshu\.com/discovery/item/\S+")
     SHARE_RN = compile(r"(?:https?://)?www\.rednote\.com/discovery/item/\S+")
-    SHORT = compile(r"(?:https?://)?xhslink\.com/[^\s\"<>\\^`{|}，。；！？、【】《》]+")
+    SHORT = compile(r"(?:https?://)?xhslink\.(?:com|cn)/[^\s\"<>\\^`{|}，。；！？、【】《》]+")
     ID = compile(r"(?:explore|item)/(\S+)?\?")
     ID_USER = compile(r"user/profile/[a-z0-9]+/(\S+)?\?")
     __INSTANCE = None
