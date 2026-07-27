@@ -89,7 +89,7 @@
 <p><strong>Method 2:</strong> Download and extract the files (do not run the program), then copy all files and directly overwrite the old version.</p>
 <h2>⌨️ Run from Source Code</h2>
 <ol>
-<li>Install <a href="https://www.python.org/">Python</a> interpreter version <code>≥3.12</code></li>
+<li>Install <a href="https://www.python.org/">Python</a> interpreter version not lower than <code>3.12</code></li>
 <li>Download the latest source code or the source code released in <a href="https://github.com/JoeanAmier/XHS-Downloader/releases/latest">Releases</a> to your local machine</li>
 <ol><b>Install project dependencies using pip</b>
 <li>Run the command <code>python -m venv venv</code> to create a virtual environment (optional)</li>
@@ -645,6 +645,14 @@ repository to execute the build process
 
 # 💝 Project Sponsorship
 
+## Bloome
+
+<p><a href="https://bloome.im/app?ref=KUyJQU6F&utm_medium=github&utm_source=JoeanAmier-XHS-Downloader-ivor-202606"><img src="static/other/Bloome_AD.png" alt="Bloome"></a></p>
+<p>Don't want to deal with setting up the environment locally? You can integrate XHS-Downloader as an Agent with <a href="https://bloome.im/app?ref=KUyJQU6F&utm_medium=github&utm_source=JoeanAmier-XHS-Downloader-ivor-202606">Bloome</a>: zero configuration, one-click cloud deployment, accessible from both browser and mobile, and you can share your configured Agent directly with others without needing separate deployments!</p>
+<p>Try it now: <a href="https://bloome.im/app?ref=KUyJQU6F&utm_medium=github&utm_source=JoeanAmier-XHS-Downloader-ivor-202606">https://bloome.im/app?ref=KUyJQU6F&utm_medium=github&utm_source=JoeanAmier-XHS-Downloader-ivor-202606</a></p>
+
+***
+
 ## DartNode
 
 [![Powered by DartNode](static/other/DartNode_AD.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
@@ -653,7 +661,7 @@ repository to execute the build process
 
 ## ZMTO
 
-<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
+<p><a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a></p>
 <p><a href="https://www.zmto.com/">ZMTO</a>: A professional cloud infrastructure provider offering sophisticated solutions with reliable technology and expert support. We also empower qualified open source initiatives with enterprise-grade VPS infrastructure, driving sustainable development and innovation in the open source ecosystem. </p>
 <h1>♥️ Support the Project</h1>
 <p>If <b>XHS-Downloader</b> has been helpful to you, please consider giving it a <b>Star</b> ⭐, Thank you for your support!</p>
